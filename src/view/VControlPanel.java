@@ -1,19 +1,22 @@
 package view;
 
-import java.awt.LayoutManager;
+import constants.Constant;
+import model.MLecture;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
 
-import model.MLecture;
+
 
 public class VControlPanel extends JPanel {
 	//attribute
-	private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = Constant.VControlPanel.VERSIONID;
 //components
 	private JButton buttonLeft;
 	private JButton buttonRight;
@@ -26,12 +29,12 @@ public class VControlPanel extends JPanel {
 		ActionListener actionHandler = new ActionHandler();
 		LayoutManager layoutManager = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layoutManager);
-		
-		this.buttonLeft = new JButton("<<<");
+
+		this.buttonLeft = new JButton(Constant.VControlPanel.leftButton);
 		this.add(buttonLeft);
 		this.buttonLeft.addActionListener(actionHandler);
 		
-		this.buttonRight = new JButton(">>>");
+		this.buttonRight = new JButton(Constant.VControlPanel.rightButton);
 		this.add(buttonRight);
 		this.buttonRight.addActionListener(actionHandler);
 
@@ -57,6 +60,8 @@ public class VControlPanel extends JPanel {
 	private void moveLeft() {
 		Vector<MLecture> selectedLectureList = this.vLectureTable2.getSelectedLecture();
 		this.vLectureTable1.addSelectedLectureList(selectedLectureList);
+
+
 	}
 	
 	class ActionHandler implements ActionListener{

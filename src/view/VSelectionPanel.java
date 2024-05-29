@@ -1,5 +1,7 @@
 package view;
 
+import constants.Constant;
+
 import java.awt.LayoutManager;
 
 import javax.swing.BoxLayout;
@@ -10,7 +12,7 @@ public class VSelectionPanel extends JPanel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = Constant.VLectureTable.VERSIONID;
 	
 	//components
 	private VIndexPanel vIndexPanel;

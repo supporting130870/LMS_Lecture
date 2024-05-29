@@ -1,9 +1,13 @@
 package view;
 
+import constants.Constant;
+
 import java.awt.LayoutManager;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+
 
 public class VIndexPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -36,7 +40,7 @@ public class VIndexPanel extends JPanel {
 	}
 
 	public void initialize() {
-		this.vCampus.show("root");
+		this.vCampus.show(Constant.VIndexPanel.home);
 
 	}
 

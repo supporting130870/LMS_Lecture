@@ -8,13 +8,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import constants.Constant;
 import control.CLecture;
 import model.MLecture;
 
 public class VLectureTable extends JScrollPane implements IIndex
 {
 	// attributes
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = Constant.VLectureTable.VERSIONID;
 	
 	// components
 	private JTable table;
@@ -61,7 +62,13 @@ public class VLectureTable extends JScrollPane implements IIndex
 		this.setViewportView(this.table);
 		
 		//associate the table with a model
-		String header[] = {	"아이디", "강좌명","강사","학점","시간"};
+		String[] header = {
+				Constant.VLectureTable.EHeader.eID.getTitle(),
+				Constant.VLectureTable.EHeader.eName.getTitle(),
+				Constant.VLectureTable.EHeader.eLecturer.getTitle(),
+				Constant.VLectureTable.EHeader.eCredit.getTitle(),
+				Constant.VLectureTable.EHeader.eTime.getTitle()
+		};
 		this.model = new DefaultTableModel(null, header);
 		this.table.setModel(this.model);		
 	    // Add ListSelectionListener for row selection

@@ -9,6 +9,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import constants.Constant;
 import control.CIndex;
 import model.MIndex;
 
@@ -38,7 +39,7 @@ public class VIndexTable extends JScrollPane implements IIndex
 		this.setViewportView(this.table);
 		
 		//associate the table with a model
-		String[] header = {	"아이디", "캠퍼스" };
+		String[] header = {Constant.IndexTable.EHeader.eID.getTitle(), Constant.IndexTable.EHeader.eName.getTitle(),};
         //enum 으로 바꾸기
 		this.model = new DefaultTableModel(null, header);
 		this.table.setModel(this.model);		
