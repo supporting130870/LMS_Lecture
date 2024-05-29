@@ -38,7 +38,8 @@ public class VIndexTable extends JScrollPane implements IIndex
 		this.setViewportView(this.table);
 		
 		//associate the table with a model
-		String header[] = {	"아이디", "캠퍼스" };
+		String[] header = {	"아이디", "캠퍼스" };
+        //enum 으로 바꾸기
 		this.model = new DefaultTableModel(null, header);
 		this.table.setModel(this.model);		
 	    // Add ListSelectionListener for row selection
