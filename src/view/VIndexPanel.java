@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 
 public class VIndexPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = Constant.VIndexPanel.VERSIONID;
 	
 	private VIndexTable vCampus;
 	private VIndexTable vCollege;

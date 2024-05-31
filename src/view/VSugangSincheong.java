@@ -1,12 +1,16 @@
 package view;
 
+import constants.Constant;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import java.awt.LayoutManager;
 
+
+
 public class VSugangSincheong extends JPanel {
 	// attributes
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = Constant.VSugangSincheong.VERSIONID;
 	// components
 	private VSelectionPanel vSelectionPanel;
 	private VControlPanel vControlPanel1;

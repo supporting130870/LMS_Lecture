@@ -73,11 +73,15 @@ public class Constant {
 
 
         }
-        public static class VSelectionPanel
-        {
-            public final static long VERSIONID = 1L;
-        }
 
 
+    }
+    public static class VSelectionPanel
+    {
+        public final static long VERSIONID = 1L;
+    }
+    public static class VSugangSincheong
+    {
+        public final static long VERSIONID = 1L;
     }
 }

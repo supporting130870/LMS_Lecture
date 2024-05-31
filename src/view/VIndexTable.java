@@ -13,10 +13,11 @@ import constants.Constant;
 import control.CIndex;
 import model.MIndex;
 
+
 public class VIndexTable extends JScrollPane implements IIndex
 {
 	// attributes
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = Constant.IndexTable.VERSIONID;
 	
 	// components
 	private JTable table;

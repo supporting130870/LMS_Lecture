@@ -12,7 +12,7 @@ public class VSelectionPanel extends JPanel {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = Constant.VLectureTable.VERSIONID;
+	private static final long serialVersionUID = Constant.VSelectionPanel.VERSIONID;
 	
 	//components
 	private VIndexPanel vIndexPanel;
