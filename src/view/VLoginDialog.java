@@ -103,6 +103,7 @@ public class VLoginDialog extends JDialog {
                 // 예를 들어, userId와 비밀번호를 검증
                 if(Objects.equals(userId, "root") && new String(password).equals("test"))
                 {
+<<<<<<< HEAD
                     dispose();
                 }
                 else
@@ -114,12 +115,21 @@ public class VLoginDialog extends JDialog {
                             JOptionPane.ERROR_MESSAGE
                     );
                 }
+=======
+                    dispose(); // 다이얼로그 닫기
+                }
+                else System.exit(0);
+>>>>>>> origin/master
 
                 System.out.println("User ID: " + userId); // 사용자 ID 출력
                 System.out.println("Password: " + new String(password)); // 비밀번호 출력 (데모 목적으로)
 
             } else if (command.equals("Cancel")) {
+<<<<<<< HEAD
 
+=======
+                dispose(); // 다이얼로그 닫기
+>>>>>>> origin/master
                 System.exit(0); // 다이얼로그의 기본 닫기 동작 설정
             }
         }
