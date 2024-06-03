@@ -23,7 +23,7 @@ public class VMainFrame extends JFrame {
 		// components
 		this.vSugangSincheong = new VSugangSincheong();
 		this.add(vSugangSincheong);
-	}
+	} 
 
 	public void initialize() {
 		// TODO Auto-generated method stub
