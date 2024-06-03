@@ -1,5 +1,6 @@
 package main;
 
+import view.VLoginDialog;
 import view.VMainFrame;
 
 public class Main {
@@ -7,12 +8,14 @@ public class Main {
 	
 	// components
 	private VMainFrame vMainFrame;
-	
+	private VLoginDialog vLoginDialog;
 	// constructor
 	public Main() {
 		// attributes
-		
+
 		// component
+		this.vLoginDialog = new VLoginDialog(this.vMainFrame);
+		this.vLoginDialog.setVisible(true);
 		this.vMainFrame = new VMainFrame();
 		this.vMainFrame.setVisible(true);
 		
