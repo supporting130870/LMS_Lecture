@@ -23,8 +23,8 @@ public class VControlPanel extends JPanel {
 	//association
 	private VLectureTable vLectureTable1;
 	private VLectureTable vLectureTable2;
-	
-	public VControlPanel() 
+
+	public VControlPanel()
 	{
 		ActionListener actionHandler = new ActionHandler();
 		LayoutManager layoutManager = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -33,37 +33,37 @@ public class VControlPanel extends JPanel {
 		this.buttonLeft = new JButton(Constant.VControlPanel.leftButton);
 		this.add(buttonLeft);
 		this.buttonLeft.addActionListener(actionHandler);
-		
+
 		this.buttonRight = new JButton(Constant.VControlPanel.rightButton);
 		this.add(buttonRight);
 		this.buttonRight.addActionListener(actionHandler);
 
-		
-		
+
 	}
-	public void initialize() 
+
+	public void initialize()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public void associate(VLectureTable vLectureTable1, VLectureTable vLectureTable2) {
 		this.vLectureTable1 = vLectureTable1;
 		this.vLectureTable2 = vLectureTable2;
 	}
-	
-	private void moveRight()
-	{
+
+	private void moveRight() {
 		Vector<MLecture> selectedLectureList = this.vLectureTable1.getSelectedLecture();
 		this.vLectureTable2.addSelectedLectureList(selectedLectureList);
 	}
+
 	private void moveLeft() {
 		Vector<MLecture> selectedLectureList = this.vLectureTable2.getSelectedLecture();
+		this.vLectureTable2.removeSelectedLectureList(selectedLectureList);
 		this.vLectureTable1.addSelectedLectureList(selectedLectureList);
-
-
 	}
-	
+
+
 	class ActionHandler implements ActionListener{
 
 		  public void actionPerformed(ActionEvent e){
@@ -71,6 +71,7 @@ public class VControlPanel extends JPanel {
 			if(e.getSource() == buttonLeft)
 			{
 				moveLeft();
+
 			}
 			else if(e.getSource() == buttonRight)
 			{

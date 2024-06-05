@@ -29,7 +29,6 @@ public class VSugangSincheong extends JPanel {
 		this.vSelectionPanel = new VSelectionPanel();
 		this.add(vSelectionPanel);
 
-		
 		this.vControlPanel1 = new VControlPanel();
 		this.add(vControlPanel1);
 		

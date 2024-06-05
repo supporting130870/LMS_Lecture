@@ -6,8 +6,8 @@ public class Constant {
         public final static long VERSIONID = 1L;
         public final static int X = 200;
         public final static int Y = 100;
-        public final static int WIDTH = 600;
-        public final static int HEIGHT = 400;
+        public final static int WIDTH = 1400;
+        public final static int HEIGHT = 800;
 
     }
     public static class VControlPanel
