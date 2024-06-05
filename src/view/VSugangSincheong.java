@@ -17,7 +17,7 @@ public class VSugangSincheong extends JPanel {
 	private VLectureTable vMiridamgi;
 	private VControlPanel vControlPanel2;	
 	private VLectureTable vSincheong;
-	
+	private VSumCredit vSumCredit;
 	// methods
 	public VSugangSincheong() {
 		
@@ -40,11 +40,15 @@ public class VSugangSincheong extends JPanel {
 		
 		this.vSincheong = new VLectureTable();
 		this.add(vSincheong);
-		
+
+		this.vSumCredit = new VSumCredit();
+		this.add(vSumCredit);
+
 		//association
-		this.vControlPanel1.associate(this.vSelectionPanel.getLectureTable(),this.vMiridamgi);
-		this.vControlPanel2.associate(this.vMiridamgi,this.vSincheong);
-		
+		this.vControlPanel1.associate(this.vSelectionPanel.getLectureTable(), this.vMiridamgi, this.vSumCredit);
+		this.vControlPanel2.associate(this.vMiridamgi, this.vSincheong, this.vSumCredit);
+		this.vSumCredit.associate(this.vSincheong);
+
 	}
 	public void initialize() {
 		this.vControlPanel1.initialize();

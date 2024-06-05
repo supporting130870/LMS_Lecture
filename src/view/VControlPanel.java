@@ -23,6 +23,7 @@ public class VControlPanel extends JPanel {
 	//association
 	private VLectureTable vLectureTable1;
 	private VLectureTable vLectureTable2;
+	private VSumCredit vSumCredit;
 
 	public VControlPanel()
 	{
@@ -47,20 +48,28 @@ public class VControlPanel extends JPanel {
 
 	}
 
-	public void associate(VLectureTable vLectureTable1, VLectureTable vLectureTable2) {
+	public void associate(VLectureTable vLectureTable1, VLectureTable vLectureTable2, VSumCredit vSumCredit) {
 		this.vLectureTable1 = vLectureTable1;
 		this.vLectureTable2 = vLectureTable2;
+		this.vSumCredit = vSumCredit;
 	}
 
 	private void moveRight() {
 		Vector<MLecture> selectedLectureList = this.vLectureTable1.getSelectedLecture();
 		this.vLectureTable2.addSelectedLectureList(selectedLectureList);
+		if (this.vSumCredit != null) {
+			this.vSumCredit.update();
+		}
+
 	}
 
 	private void moveLeft() {
 		Vector<MLecture> selectedLectureList = this.vLectureTable2.getSelectedLecture();
 		this.vLectureTable2.removeSelectedLectureList(selectedLectureList);
 		this.vLectureTable1.addSelectedLectureList(selectedLectureList);
+		if (this.vSumCredit != null) {
+			this.vSumCredit.update();
+		}
 	}
 
 
@@ -78,5 +87,6 @@ public class VControlPanel extends JPanel {
 				moveRight();
 			}
 		}
-	}}
+		  }
+	}
 }

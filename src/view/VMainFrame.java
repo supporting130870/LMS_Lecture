@@ -12,7 +12,8 @@ public class VMainFrame extends JFrame {
 
 	// components
 	private VSugangSincheong vSugangSincheong;
-
+	private JMainMenuBar menuBar;
+	private VClock vClock;
 	public VMainFrame() {
 		// attributes
 		//this.setLocation(Constant.MainFrame.X, Constant.MainFrame.Y);
@@ -23,8 +24,14 @@ public class VMainFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// components
+		this.menuBar = new JMainMenuBar();
+		this.setJMenuBar(menuBar);
+
 		this.vSugangSincheong = new VSugangSincheong();
 		this.add(vSugangSincheong);
+
+		//this.vClock = new VClock();
+		//this.add(vClock);
 
 
 	}

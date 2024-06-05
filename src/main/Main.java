@@ -18,24 +18,22 @@ public class Main {
 		this.vLoginDialog.setVisible(true);
 		this.vMainFrame = new VMainFrame();
 		this.vMainFrame.setVisible(true);
-		
 		// associations
 	}
-	private void initialize() {
-		this.vMainFrame.initialize();
+	public static void main(String[] args) {
+        VMainFrame vMainFrame = new VMainFrame();
+        VLoginDialog vLoginDialog = new VLoginDialog(vMainFrame);
+        vLoginDialog.setVisible(true);
+        vMainFrame.setVisible(true);
+        vMainFrame.initialize();
 	}
 	
 	// methods
 	private void run() {
 	}
-	
-	public static void main(String[] args) {
-		Main main = new Main();
-		main.initialize();
-		main.run();
-	}
+
+	private void initialize() {
 
 
-	
-
+    }
 }
