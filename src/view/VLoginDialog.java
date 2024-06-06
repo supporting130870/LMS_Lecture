@@ -5,11 +5,9 @@ import model.MUser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class VLoginDialog extends JDialog {
     private JTextField idField;
@@ -29,9 +27,36 @@ public class VLoginDialog extends JDialog {
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        addLabelAndField("ID:", idField = new JTextField(15), gbc, 0);
-        addLabelAndField("Password:", passwordField = new JPasswordField(15), gbc, 1);
+        // 이미지 라벨을 상단 가운데에 배치
+        ImageIcon originalIcon = new ImageIcon("data/Myongji-ui_BIG/5-1.png");
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // 이미지 크기 조정
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        JLabel imageLabel = new JLabel(scaledIcon);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        this.add(imageLabel, gbc);
+        imageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://www.mju.ac.kr/mjukr/index.do"));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
 
+
+        // ID 필드와 라벨 추가
+        addLabelAndField("ID:", idField = new JTextField(15), gbc, 1);
+
+        // 패스워드 필드와 라벨 추가
+        addLabelAndField("Password:", passwordField = new JPasswordField(15), gbc, 2);
+
+        // 로그인 버튼 추가
         loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
             @Override
@@ -40,10 +65,11 @@ public class VLoginDialog extends JDialog {
             }
         });
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.gridwidth = 2;
         add(loginButton, gbc);
 
+        // 회원가입 버튼 추가
         signUpButton = new JButton("Sign Up");
         signUpButton.addActionListener(new ActionListener() {
             @Override
@@ -53,11 +79,11 @@ public class VLoginDialog extends JDialog {
             }
         });
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
         add(signUpButton, gbc);
 
-        setSize(400, 200);  // 크기 조정
+        setSize(500, 400);  // 로그인 창 크기 조정
         setLocationRelativeTo(parent);
 
         // 닫기 버튼 동작 설정
@@ -109,4 +135,6 @@ public class VLoginDialog extends JDialog {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }
+
