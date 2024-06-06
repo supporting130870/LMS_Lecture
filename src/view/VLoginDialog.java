@@ -22,14 +22,15 @@ public class VLoginDialog extends JDialog {
     public VLoginDialog(JFrame parent) {
         super(parent, "Login", true);
         this.parent = parent;
+
         daoUser = new DAOUser();
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        addLabelAndField("ID:", idField = new JTextField(15), gbc, 0);  // 열 수 설정
-        addLabelAndField("Password:", passwordField = new JPasswordField(15), gbc, 1);  // 열 수 설정
+        addLabelAndField("ID:", idField = new JTextField(15), gbc, 0);
+        addLabelAndField("Password:", passwordField = new JPasswordField(15), gbc, 1);
 
         loginButton = new JButton("Login");
         loginButton.addActionListener(new ActionListener() {
@@ -89,14 +90,23 @@ public class VLoginDialog extends JDialog {
         try {
             MUser user = daoUser.findUserByIdAndPassword(id, password);
             if (user != null) {
-                JOptionPane.showMessageDialog(this, "Login Successful", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Login Successful",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE);
                 dispose();
                 ((VMainFrame) parent).initialize();  // 로그인 성공 시 메인 프레임의 initialize 메서드 호출
             } else {
-                JOptionPane.showMessageDialog(this, "Invalid ID or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Invalid ID or Password",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error loading user information", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "Error loading user information",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }

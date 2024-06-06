@@ -27,10 +27,11 @@ public class VSumCredit extends JPanel {
         frame.setVisible(true);
     }
 
-    public void update() {
+    public int update() {
         int credits = this.vSincheong.updateTotalCredits();
         String creditWord = String.valueOf(credits);
         totalCreditsLabel.setText("총 학점: " + creditWord);
+        return credits;
     }
 
     public void associate(VLectureTable vSincheong) {

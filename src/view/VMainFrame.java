@@ -3,6 +3,7 @@ package view;
 import constants.Constant;
 
 import javax.swing.JFrame;
+import java.awt.*;
 import java.io.Serial;
 
 public class VMainFrame extends JFrame {
@@ -27,12 +28,14 @@ public class VMainFrame extends JFrame {
 		this.menuBar = new JMainMenuBar();
 		this.setJMenuBar(menuBar);
 
+        setLayout(new BorderLayout());
+
+
 		this.vSugangSincheong = new VSugangSincheong();
-		this.add(vSugangSincheong);
+        this.add(vSugangSincheong, BorderLayout.CENTER);
 
-		//this.vClock = new VClock();
-		//this.add(vClock);
-
+        this.vClock = new VClock();
+        this.add(vClock, BorderLayout.SOUTH);
 
 	}
 

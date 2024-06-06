@@ -14,7 +14,7 @@ public class VClock extends JPanel {
         timeLabel = new JLabel();
         timeFormat = new SimpleDateFormat("HH:mm:ss.SSS");
         setLayout(new BorderLayout());
-        add(timeLabel, BorderLayout.EAST);
+        add(timeLabel, BorderLayout.WEST);
         updateTime();
 
         // 타이머 설정 (1초마다 실행)

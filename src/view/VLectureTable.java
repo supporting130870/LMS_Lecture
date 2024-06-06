@@ -106,10 +106,8 @@ public class VLectureTable extends JScrollPane implements IIndex {
 			row[2] = mLecture.getLecturer();
 			row[3] = mLecture.getCredit();
 			row[4] = mLecture.getTime();
-
 			this.model.addRow(row);
 		}
-
 		this.updateUI();
 	}
 
