@@ -7,15 +7,18 @@ public class MUser {
     private String campus;
     private String birthDate;
     private String studentId;
+    private String college;
+    private String department;
 
-    // Constructor, getters, and setters
-    public MUser(String name, String id, String password, String campus, String birthDate, String studentId) {
+    public MUser(String name, String id, String password, String campus, String birthDate, String studentId, String college, String department) {
         this.name = name;
         this.id = id;
         this.password = password;
         this.campus = campus;
         this.birthDate = birthDate;
         this.studentId = studentId;
+        this.college = college;
+        this.department = department;
     }
 
     public String getName() {
@@ -65,4 +68,22 @@ public class MUser {
     public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
+
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    // Getters and setters for all fields
 }

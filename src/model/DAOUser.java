@@ -23,7 +23,8 @@ public class DAOUser {
     public void saveUser(MUser user) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(user.getName() + "," + user.getId() + "," + user.getPassword() + "," +
-                    user.getCampus() + "," + user.getBirthDate() + "," + user.getStudentId());
+                    user.getCampus() + "," + user.getBirthDate() + "," + user.getStudentId() + "," +
+                    user.getCollege() + "," + user.getDepartment());
             writer.newLine();
         } catch (IOException e) {
             System.err.println("Error saving user: " + e.getMessage());
@@ -37,8 +38,8 @@ public class DAOUser {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 6) {
-                    MUser user = new MUser(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]);
+                if (parts.length == 8) {
+                    MUser user = new MUser(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
                     users.add(user);
                 }
             }
@@ -68,4 +69,15 @@ public class DAOUser {
         }
         return false;
     }
+
+    public String findIdByNameBirthDateAndStudentId(String name, String birthDate, String studentId) throws IOException {
+        List<MUser> users = loadUsers();
+        for (MUser user : users) {
+            if (user.getName().equals(name) && user.getBirthDate().equals(birthDate) && user.getStudentId().equals(studentId)) {
+                return user.getId();
+            }
+        }
+        return null;
+    }
+
 }

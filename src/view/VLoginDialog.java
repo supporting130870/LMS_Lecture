@@ -14,12 +14,13 @@ public class VLoginDialog extends JDialog {
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton signUpButton;
+    private JButton findIdButton;
     private DAOUser daoUser;
     private JFrame parent;
     private  int count;
     private boolean locked;
     public VLoginDialog(JFrame parent) {
-        super(parent, "Login", true);
+        super(parent, "로그인", true);
         this.parent = parent;
         count = 0;
         locked = false;
@@ -56,10 +57,10 @@ public class VLoginDialog extends JDialog {
         addLabelAndField("ID:", idField = new JTextField(15), gbc, 1);
 
         // 패스워드 필드와 라벨 추가
-        addLabelAndField("Password:", passwordField = new JPasswordField(15), gbc, 2);
+        addLabelAndField("비밀번호:", passwordField = new JPasswordField(15), gbc, 2);
 
         // 로그인 버튼 추가
-        loginButton = new JButton("Login");
+        loginButton = new JButton("로그인");
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,7 +73,7 @@ public class VLoginDialog extends JDialog {
         add(loginButton, gbc);
 
         // 회원가입 버튼 추가
-        signUpButton = new JButton("Sign Up");
+        signUpButton = new JButton("회원가입");
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -84,6 +85,19 @@ public class VLoginDialog extends JDialog {
         gbc.gridy = 4;
         gbc.gridwidth = 2;
         add(signUpButton, gbc);
+
+        findIdButton = new JButton("아이디 찾기");
+        findIdButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VFindIdDialog findIdDialog = new VFindIdDialog(parent);
+                findIdDialog.setVisible(true);
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        add(findIdButton, gbc);
 
         setSize(500, 400);  // 로그인 창 크기 조정
         setLocationRelativeTo(parent);
@@ -117,9 +131,9 @@ public class VLoginDialog extends JDialog {
             if ("나는 사람입니다.".equals(input)) {
                 count = 0;
                 locked = false;
-                JOptionPane.showMessageDialog(this, "You can try logging in again.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "이제 다시 로그인할 수 있습니다.", "Information", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Incorrect phrase. Try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "잘못입력하셨습니다. 다시 입력해주세요.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             return;
         }
@@ -131,21 +145,21 @@ public class VLoginDialog extends JDialog {
             MUser user = daoUser.findUserByIdAndPassword(id, password);
             if (user != null) {
                 JOptionPane.showMessageDialog(this,
-                        "Login Successful",
+                        "로그인 성공, 환영합니다.",
                         "Success",
                         JOptionPane.INFORMATION_MESSAGE);
                 dispose();
-                ((VMainFrame) parent).initialize();  // 로그인 성공 시 메인 프레임의 initialize 메서드 호출
+                ((VMainFrame) parent).initialize(user);  // 로그인 성공 시 메인 프레임의 initialize 메서드 호출
             } else {
                 count++;
                 JOptionPane.showMessageDialog(this,
-                        "Invalid ID or Password",
+                        "잘못된 ID 또는 비밀번호입니다.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
                 if(count >= 5) {
                     locked = true;
                     JOptionPane.showMessageDialog(this,
-                            "5회이상 비밀번호를 틀리셨습니다. '나는 사람입니다.'를 타이핑해야 다시 로그인을 할 수 있습니다.",
+                            "5회이상 비밀번호를 틀리셨습니다. '나는 사람입니다.'를 입력하여 다시 로그인을 시도하십시오.",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
                     handleLogin();
