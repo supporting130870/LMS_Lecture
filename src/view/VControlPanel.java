@@ -2,6 +2,7 @@ package view;
 
 import constants.Constant;
 import model.MLecture;
+import model.MUser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class VControlPanel extends JPanel {
 	private VLectureTable vLectureTable1;
 	private VLectureTable vLectureTable2;
 	private VSumCredit vSumCredit;
+	private static int MaxCredit;
 
 	public VControlPanel()
 	{
@@ -44,9 +46,9 @@ public class VControlPanel extends JPanel {
 
 	public void initialize()
 	{
-		// TODO Auto-generated method stub
 
 	}
+
 
 	public void associate(VLectureTable vLectureTable1, VLectureTable vLectureTable2, VSumCredit vSumCredit) {
 		this.vLectureTable1 = vLectureTable1;
@@ -54,13 +56,17 @@ public class VControlPanel extends JPanel {
 		this.vSumCredit = vSumCredit;
 	}
 
+	public static void MaxCredit(int temp)
+	{
+		MaxCredit = temp;
+	}
 	private void moveRight() {
 		//수정대상임.
 		Vector<MLecture> selectedLectureList = this.vLectureTable1.getSelectedLecture();
 		this.vLectureTable2.addSelectedLectureList(selectedLectureList);
 		this.vSumCredit.update();
 
-		if (this.vSumCredit.update() > 17) {
+		if (this.vSumCredit.update() > MaxCredit) {
 			JOptionPane.showMessageDialog(null, "최대 수강가능한 학점을 초과했습니다", "error", JOptionPane.ERROR_MESSAGE);
 			this.vLectureTable2.removeSelectedLectureList(selectedLectureList);
 			this.vSumCredit.update();
@@ -75,6 +81,7 @@ public class VControlPanel extends JPanel {
 			this.vSumCredit.update();
 		}
 	}
+
 
 
 	class ActionHandler implements ActionListener{
