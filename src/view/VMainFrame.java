@@ -1,10 +1,12 @@
 package view;
 
 import constants.Constant;
+import model.DAOUser;
 import model.MUser;
 
 import javax.swing.JFrame;
 import java.awt.*;
+import java.io.IOException;
 import java.io.Serial;
 
 import static javax.management.Query.or;
@@ -20,7 +22,9 @@ public class VMainFrame extends JFrame {
 	private VClock vClock;
 	private MUser loggedInUser;
 	private VControlPanel vControlPanel;
-	public int MaxCredit;
+	private DAOUser daoUser;
+	private VSumCredit vSumCredit;
+
 	public VMainFrame() {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Image img = kit.getImage("data/Myongji-ui_BIG/5-1.gif");
@@ -37,7 +41,7 @@ public class VMainFrame extends JFrame {
 		this.setJMenuBar(menuBar);
 
         setLayout(new BorderLayout());
-
+		this.daoUser = new DAOUser();
 
 		this.vSugangSincheong = new VSugangSincheong();
         this.add(vSugangSincheong, BorderLayout.CENTER);
@@ -50,17 +54,19 @@ public class VMainFrame extends JFrame {
 	{
 		this.vSugangSincheong.initialize();
 	}
-	public void initialize(MUser user) {
-
+	public void initialize(MUser user) throws IOException {
+		this.loggedInUser = user;
+		this.vSugangSincheong.setLoggedInUser(user);
 		// TODO Auto-generated method stub
 		String temp = user.getCollege();
 		if ("공과대학".equals(temp) || "건축대학".equals(temp) || "ICT융합대학".equals(temp)) {
-			MaxCredit = 18;
-			VControlPanel.MaxCredit(MaxCredit);
+
+			VControlPanel.MaxCredit(18);
 		}
 		else VControlPanel.MaxCredit(17);
+		this.daoUser.loadDataTable(user.getId(), this.vSugangSincheong.getVMiridamgi(), this.vSugangSincheong.getVSincheong());
+
 	}
 
-	// methods
 }
 

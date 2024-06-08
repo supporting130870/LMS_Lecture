@@ -1,16 +1,18 @@
 package view;
 
 import constants.Constant;
+import model.DAOUser;
+import model.MUser;
 
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.LayoutManager;
-
+import java.io.IOException;
 
 
 public class VSugangSincheong extends JPanel {
 	// attributes
 	private static final long serialVersionUID = Constant.VSugangSincheong.VERSIONID;
+	private final DAOUser daoUser;
 	// components
 	private VSelectionPanel vSelectionPanel;
 	private VControlPanel vControlPanel1;
@@ -18,6 +20,8 @@ public class VSugangSincheong extends JPanel {
 	private VControlPanel vControlPanel2;	
 	private VLectureTable vSincheong;
 	private VSumCredit vSumCredit;
+	private MUser loggedInUser;
+
 	// methods
 	public VSugangSincheong() {
 		
@@ -49,17 +53,52 @@ public class VSugangSincheong extends JPanel {
 		this.vControlPanel2.associate(this.vMiridamgi, this.vSincheong, this.vSumCredit);
 		this.vSumCredit.associate(this.vSincheong);
 
+
+		this.daoUser = new DAOUser();
+		this.addTableModelListeners();
+
+
 	}
+
+	private void addTableModelListeners() {
+		vMiridamgi.getModel().addTableModelListener(e -> {
+			if (loggedInUser != null) {
+				try {
+					daoUser.saveDataTable(loggedInUser.getId(), vMiridamgi, vSincheong);
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+			}
+		});
+
+		vSincheong.getModel().addTableModelListener(e -> {
+			if (loggedInUser != null) {
+				try {
+					daoUser.saveDataTable(loggedInUser.getId(), vMiridamgi, vSincheong);
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+			}
+		});
+	}
+
 	public void initialize() {
 		this.vControlPanel1.initialize();
 		this.vMiridamgi.initialize();
 		this.vControlPanel2.initialize();
 		this.vSincheong.initialize();
 		this.vSelectionPanel.initialize();
-		
 	}
-	public void finish() {
-	}	
-	public void run() {
+
+	public VLectureTable getVMiridamgi() {
+		return vMiridamgi;
+	}
+
+	public VLectureTable getVSincheong() {
+		return vSincheong;
+	}
+
+	public void setLoggedInUser(MUser user) {
+		this.loggedInUser = user;
 	}
 }

@@ -64,12 +64,14 @@ public class VControlPanel extends JPanel {
 		//수정대상임.
 		Vector<MLecture> selectedLectureList = this.vLectureTable1.getSelectedLecture();
 		this.vLectureTable2.addSelectedLectureList(selectedLectureList);
-		this.vSumCredit.update();
+		VSumCredit.update();
+		this.vLectureTable1.updateUI();
+		this.vLectureTable2.updateUI();
 
-		if (this.vSumCredit.update() > MaxCredit) {
+		if (VSumCredit.update() > MaxCredit) {
 			JOptionPane.showMessageDialog(null, "최대 수강가능한 학점을 초과했습니다", "error", JOptionPane.ERROR_MESSAGE);
 			this.vLectureTable2.removeSelectedLectureList(selectedLectureList);
-			this.vSumCredit.update();
+			VSumCredit.update();
 		}
 	}
 
@@ -77,9 +79,13 @@ public class VControlPanel extends JPanel {
 		Vector<MLecture> selectedLectureList = this.vLectureTable2.getSelectedLecture();
 		this.vLectureTable2.removeSelectedLectureList(selectedLectureList);
 		this.vLectureTable1.addSelectedLectureList(selectedLectureList);
+		this.vLectureTable1.updateUI();
+		this.vLectureTable2.updateUI();
+
 		if (this.vSumCredit != null) {
 			this.vSumCredit.update();
 		}
+
 	}
 
 

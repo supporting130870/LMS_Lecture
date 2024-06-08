@@ -12,6 +12,8 @@ public class MLecture {
 		
 	}
 
+
+
 	public int getId() {
 		return id;
 	}

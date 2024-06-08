@@ -7,6 +7,8 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import constants.Constant;
 import control.CLecture;
 import model.MLecture;
@@ -16,11 +18,12 @@ public class VLectureTable extends JScrollPane implements IIndex {
 	private static final long serialVersionUID = Constant.VLectureTable.VERSIONID;
 
 	// components
-	JTable table;
+	private JTable table;
 	private DefaultTableModel model;
 	private int selectedIndex;
 	// associations
 	private Vector<MLecture> mLectureList;
+	private VSumCredit vSumCredit;
 
 	// methods
 	public VLectureTable() {
@@ -51,14 +54,26 @@ public class VLectureTable extends JScrollPane implements IIndex {
 		Vector<MLecture> vSelectedLectureList = new Vector<MLecture>();
 
 		for (int index : selectedIndices) {
-			vSelectedLectureList.add(this.mLectureList.get(index));
+			if (index >= 0 && index < this.mLectureList.size()) {
+				vSelectedLectureList.add(this.mLectureList.get(index));
+			} else {
+				System.err.println("Invalid index: " + index);
+			}
 		}
 		return vSelectedLectureList;
 	}
 
 	public void addSelectedLectureList(Vector<MLecture> selectedLectureList) {
 		for (MLecture mLecture : selectedLectureList) {
-			if (!this.mLectureList.contains(mLecture)) { // 중복 확인
+			boolean exists = false;
+			for (int i = 0; i < this.model.getRowCount(); i++) {
+				if (this.model.getValueAt(i, 0).equals(String.valueOf(mLecture.getId()))) {
+					exists = true;
+					break;
+				}
+			}
+
+			if (!exists) { // 중복 확인
 				this.mLectureList.add(mLecture);
 				String[] row = new String[5];
 				row[0] = String.valueOf(mLecture.getId());
@@ -72,6 +87,7 @@ public class VLectureTable extends JScrollPane implements IIndex {
 		}
 		this.updateUI();
 		updateTotalCredits(); // 학점 합계 갱신
+
 	}
 
 	public void removeSelectedLectureList(Vector<MLecture> selectedLectureList) {
@@ -133,11 +149,42 @@ public class VLectureTable extends JScrollPane implements IIndex {
 
 	}
 
+	public JTable getTable() {
+		return table;
+	}
+
+	public TableModel getModel() {
+		return model;
+	}
+	public void loadData(Vector<MLecture> lectureList) {
+		this.mLectureList = lectureList;
+
+		// 테이블 모델 초기화
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0); // 기존 데이터 삭제
+
+		for (MLecture lecture : this.mLectureList) {
+			String[] row = {
+					String.valueOf(lecture.getId()),
+					lecture.getName(),
+					lecture.getLecturer(),
+					lecture.getCredit(),
+					lecture.getTime()
+			};
+			model.addRow(row);
+		}
+		VSumCredit.update();
+
+	}
+
+
+
 
 	private class RowSelectionHandler implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			if (!e.getValueIsAdjusting()) {
+
 				selectedIndex = table.getSelectedRow();
 				if (selectedIndex >= 0) {
 					System.out.println(selectedIndex); // 혹은 선택된 행에 따라 원하는 작업 수행
