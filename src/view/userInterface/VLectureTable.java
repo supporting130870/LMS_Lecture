@@ -172,7 +172,8 @@ public class VLectureTable extends JScrollPane implements IIndex {
 			};
 			model.addRow(row);
 		}
-		VSumCredit.update();
+		VSumCredit.updateSincheong();
+		VSumCredit.updateMiridamgi();
 
 	}
 

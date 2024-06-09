@@ -51,7 +51,7 @@ public class VSugangSincheong extends JPanel {
 		//association
 		this.vControlPanel1.associate(this.vSelectionPanel.getLectureTable(), this.vMiridamgi, this.vSumCredit);
 		this.vControlPanel2.associate(this.vMiridamgi, this.vSincheong, this.vSumCredit);
-		this.vSumCredit.associate(this.vSincheong);
+		this.vSumCredit.associate(this.vSincheong, this.vMiridamgi);
 
 
 		this.daoUser = new DAOUser();

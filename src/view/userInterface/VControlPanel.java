@@ -28,17 +28,33 @@ public class VControlPanel extends JPanel {
 
 	public VControlPanel()
 	{
-		ActionListener actionHandler = new ActionHandler();
+
+
+
+		JPanel yGap = new JPanel();
+		yGap.setSize(0, 3);
+		this.add(yGap); // 자식으로 등록
+
 		LayoutManager layoutManager = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layoutManager);
+
+		ActionListener actionHandler = new ActionHandler();
 
 		this.buttonLeft = new JButton(Constant.VControlPanel.leftButton);
 		this.add(buttonLeft);
 		this.buttonLeft.addActionListener(actionHandler);
 
+		yGap = new JPanel();
+		yGap.setSize(0, 3);
+		this.add(yGap); // 자식으로 등록
+
 		this.buttonRight = new JButton(Constant.VControlPanel.rightButton);
 		this.add(buttonRight);
 		this.buttonRight.addActionListener(actionHandler);
+
+		yGap = new JPanel();
+		yGap.setSize(0, 3);
+		this.add(yGap); // 자식으로 등록
 
 
 	}
@@ -63,14 +79,22 @@ public class VControlPanel extends JPanel {
 		//수정대상임.
 		Vector<MLecture> selectedLectureList = this.vLectureTable1.getSelectedLecture();
 		this.vLectureTable2.addSelectedLectureList(selectedLectureList);
-		VSumCredit.update();
+		VSumCredit.updateSincheong();
 		this.vLectureTable1.updateUI();
 		this.vLectureTable2.updateUI();
-
-		if (VSumCredit.update() > MaxCredit) {
+		VSumCredit.updateSincheong();
+		VSumCredit.updateMiridamgi();
+		if (VSumCredit.updateSincheong() > MaxCredit) {
 			JOptionPane.showMessageDialog(null, "최대 수강가능한 학점을 초과했습니다", "error", JOptionPane.ERROR_MESSAGE);
 			this.vLectureTable2.removeSelectedLectureList(selectedLectureList);
-			VSumCredit.update();
+			VSumCredit.updateSincheong();
+			VSumCredit.updateMiridamgi();
+		}
+		if (VSumCredit.updateMiridamgi() > 21) {
+			JOptionPane.showMessageDialog(null, "미리담기 가능한 학점을 초과했습니다", "error", JOptionPane.ERROR_MESSAGE);
+			this.vLectureTable2.removeSelectedLectureList(selectedLectureList);
+			VSumCredit.updateSincheong();
+			VSumCredit.updateMiridamgi();
 		}
 	}
 
@@ -81,9 +105,9 @@ public class VControlPanel extends JPanel {
 		this.vLectureTable1.updateUI();
 		this.vLectureTable2.updateUI();
 
-		if (this.vSumCredit != null) {
-			this.vSumCredit.update();
-		}
+		VSumCredit.updateSincheong();
+		VSumCredit.updateMiridamgi();
+
 
 	}
 

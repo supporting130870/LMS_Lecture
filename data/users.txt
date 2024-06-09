@@ -1,3 +1,4 @@
 김지원,supporting130870,Jiwon1308@,Seoul,20050827,60241200,ICT융합대학,디지털콘텐츠,student
 강동훈,test,test,Seoul,20050000,60240000,경영대학,경영학과,student
 관리자,admin,root,seoul,20050000,60240000,dd,dd,admin
+박규빈,testuser,testuser,Seoul,20050822,602403333,사회과학대학,디지털미디어학과,student
