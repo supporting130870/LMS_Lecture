@@ -1,4 +1,4 @@
-package view;
+package view.userInterface;
 
 import constants.Constant;
 import model.DAOUser;
@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import java.awt.*;
 import java.io.IOException;
 import java.io.Serial;
-
-import static javax.management.Query.or;
 
 public class VMainFrame extends JFrame {
 	// attributes
@@ -62,11 +60,23 @@ public class VMainFrame extends JFrame {
 		if ("공과대학".equals(temp) || "건축대학".equals(temp) || "ICT융합대학".equals(temp)) {
 
 			VControlPanel.MaxCredit(18);
+			VSumCredit.MaxCredit(18);
 		}
-		else VControlPanel.MaxCredit(17);
+		else {
+			VControlPanel.MaxCredit(17);
+			VSumCredit.MaxCredit(17);
+		}
 		this.daoUser.loadDataTable(user.getId(), this.vSugangSincheong.getVMiridamgi(), this.vSugangSincheong.getVSincheong());
 
 	}
+	public void dispose() {
+		System.out.println("VMainFrame dispose() called");
+		super.dispose();
+	}
+
+
+
+
 
 }
 

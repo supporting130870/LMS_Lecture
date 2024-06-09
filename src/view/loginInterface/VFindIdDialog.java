@@ -1,4 +1,4 @@
-package view;
+package view.loginInterface;
 
 import model.DAOUser;
 import model.MUser;

@@ -1,8 +1,7 @@
-package view;
+package view.userInterface;
 
 import constants.Constant;
 import model.MLecture;
-import model.MUser;
 
 import javax.swing.*;
 import java.awt.*;

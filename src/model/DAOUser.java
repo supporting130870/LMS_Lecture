@@ -1,10 +1,8 @@
 package model;
 
-import view.VLectureTable;
-import view.VMainFrame;
+import view.userInterface.VLectureTable;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import java.io.*;
 import java.nio.file.Paths;
@@ -19,7 +17,6 @@ public class DAOUser {
     private static final String FILE_PATH = Paths.get(System.getProperty("user.dir"), "data", "users.txt").toString();
 
     public DAOUser() {
-
         File file = new File(FILE_PATH);
         if (!file.exists()) {
             try {
@@ -35,7 +32,7 @@ public class DAOUser {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
             writer.write(user.getName() + "," + user.getId() + "," + user.getPassword() + "," +
                     user.getCampus() + "," + user.getBirthDate() + "," + user.getStudentId() + "," +
-                    user.getCollege() + "," + user.getDepartment());
+                    user.getCollege() + "," + user.getDepartment() + "," + user.getRole());
             writer.newLine();
         } catch (IOException e) {
             System.err.println("Error saving user: " + e.getMessage());
@@ -43,14 +40,14 @@ public class DAOUser {
         }
     }
 
-    public List<MUser> loadUsers() throws IOException {
-        List<MUser> users = new ArrayList<>();
+    public Vector<MUser> loadUsers() throws IOException {
+        Vector<MUser> users = new Vector<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 8) {
-                    MUser user = new MUser(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
+                if (parts.length == 9) { // 역할 필드 포함
+                    MUser user = new MUser(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8]);
                     users.add(user);
                 }
             }
@@ -62,7 +59,7 @@ public class DAOUser {
     }
 
     public MUser findUserByIdAndPassword(String id, String password) throws IOException {
-        List<MUser> users = loadUsers();
+        Vector<MUser> users = loadUsers();
         for (MUser user : users) {
             if (user.getId().equals(id) && user.getPassword().equals(password)) {
                 return user;
@@ -72,7 +69,7 @@ public class DAOUser {
     }
 
     public boolean isUserIdExist(String id) throws IOException {
-        List<MUser> users = loadUsers();
+        Vector<MUser> users = loadUsers();
         for (MUser user : users) {
             if (user.getId().equals(id)) {
                 return true;
@@ -82,7 +79,7 @@ public class DAOUser {
     }
 
     public String findIdByNameBirthDateAndStudentId(String name, String birthDate, String studentId) throws IOException {
-        List<MUser> users = loadUsers();
+        Vector<MUser> users = loadUsers();
         for (MUser user : users) {
             if (user.getName().equals(name) && user.getBirthDate().equals(birthDate) && user.getStudentId().equals(studentId)) {
                 return user.getId();
@@ -114,14 +111,12 @@ public class DAOUser {
         }
     }
 
-    // 테이블 데이터 로딩 메소드
     public void loadDataTable(String userID, VLectureTable vMiridamgi, VLectureTable vSincheong) throws IOException {
         Vector<MLecture> miridamgiLectures = loadTableData(userID, "miridamgi");
         Vector<MLecture> sincheongLectures = loadTableData(userID, "sincheong");
 
         vMiridamgi.loadData(miridamgiLectures);
         vSincheong.loadData(sincheongLectures);
-
     }
 
     private Vector<MLecture> loadTableData(String userID, String tableName) throws IOException {
@@ -132,7 +127,6 @@ public class DAOUser {
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                 String line;
-
                 while ((line = reader.readLine()) != null) {
                     String[] values = line.split(" ");
                     if (values.length == 5) { // 열의 수가 5인 경우에만 처리
@@ -154,5 +148,4 @@ public class DAOUser {
         }
         return lectureList;
     }
-
 }

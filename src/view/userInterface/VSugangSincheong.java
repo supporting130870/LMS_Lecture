@@ -1,4 +1,4 @@
-package view;
+package view.userInterface;
 
 import constants.Constant;
 import model.DAOUser;

@@ -1,4 +1,4 @@
-package view;
+package view.loginInterface;
 
 import model.DAOIndex;
 import model.DAOUser;
@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.util.Vector;
 
 public class VSignUpDialog extends JDialog {
@@ -162,7 +161,7 @@ public class VSignUpDialog extends JDialog {
         String department = (String) departmentComboBox.getSelectedItem();
         String birthDate = birthDateField.getText();
         String studentId = studentIdField.getText();
-
+        String role = "student";
         if (!password.equals(confirmPassword)) {
             JOptionPane.showMessageDialog(this, "비밀번호가 일치하지 않습니다.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -178,7 +177,7 @@ public class VSignUpDialog extends JDialog {
             return;
         }
 
-        MUser user = new MUser(name, id, password, campus, birthDate, studentId, college, department);
+        MUser user = new MUser(name, id, password, campus, birthDate, studentId, college, department, role);
 
         try {
             daoUser.saveUser(user);

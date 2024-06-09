@@ -1,6 +1,8 @@
-package view;
+package view.userInterface;
 
 import constants.Constant;
+import view.userInterface.VIndexPanel;
+import view.userInterface.VLectureTable;
 
 import java.awt.LayoutManager;
 

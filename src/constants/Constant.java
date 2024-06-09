@@ -84,4 +84,38 @@ public class Constant {
     {
         public final static long VERSIONID = 1L;
     }
+
+    public static class VUserList
+    {
+        public final static long VERSIONID = 1L;
+
+        public enum EHeader
+        {
+            eName("이름"),
+            eID("ID"),
+            ePW("비밀번호"),
+            eCampus("캠퍼스"),
+            eBirthDate("생년월일"),
+            eNumber("학번"),
+            eCollege("단과대"),
+            eDepartment("학과"),
+            eRole("역할");
+
+
+
+
+
+            public String title;
+            private EHeader(String title)
+            {
+                this.title = title;
+            }
+            public String getTitle()
+            {
+                return this.title;
+            }
+
+
+        }
+    }
 }

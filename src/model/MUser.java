@@ -9,8 +9,9 @@ public class MUser {
     private String studentId;
     private String college;
     private String department;
+    private String role;
 
-    public MUser(String name, String id, String password, String campus, String birthDate, String studentId, String college, String department) {
+    public MUser(String name, String id, String password, String campus, String birthDate, String studentId, String college, String department, String role) {
         this.name = name;
         this.id = id;
         this.password = password;
@@ -19,8 +20,8 @@ public class MUser {
         this.studentId = studentId;
         this.college = college;
         this.department = department;
+        this.role = role; // 역할 필드 초기화
     }
-
     public String getName() {
         return name;
     }
@@ -83,6 +84,14 @@ public class MUser {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     // Getters and setters for all fields

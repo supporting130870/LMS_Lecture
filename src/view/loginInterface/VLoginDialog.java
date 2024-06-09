@@ -1,7 +1,9 @@
-package view;
+package view.loginInterface;
 
 import model.DAOUser;
 import model.MUser;
+import view.managerInterface.VManagerFrame;
+import view.userInterface.VMainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,16 +17,26 @@ public class VLoginDialog extends JDialog {
     private JButton loginButton;
     private JButton signUpButton;
     private JButton findIdButton;
+    private JButton switchToAdminButton; // 추가
+    private JButton switchToStudentButton; // 추가
     private DAOUser daoUser;
     private JFrame parent;
-    private  int count;
+    private int count;
     private boolean locked;
+    private boolean isAdminMode; // 현재 로그인 모드를 나타냄
+
     public VLoginDialog(JFrame parent) {
         super(parent, "로그인", true);
         this.parent = parent;
         count = 0;
         locked = false;
         daoUser = new DAOUser();
+        isAdminMode = false; // 초기 모드는 학생 로그인
+        initializeLayout();
+    }
+
+    private void initializeLayout() {
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -33,7 +45,7 @@ public class VLoginDialog extends JDialog {
         // 이미지 라벨을 상단 가운데에 배치
         ImageIcon originalIcon = new ImageIcon("data/Myongji-ui_BIG/5-1.png");
         Image originalImage = originalIcon.getImage();
-        Image scaledImage = originalImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH); // 이미지 크기 조정
+        Image scaledImage = originalImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         JLabel imageLabel = new JLabel(scaledIcon);
         gbc.gridx = 0;
@@ -51,7 +63,6 @@ public class VLoginDialog extends JDialog {
                 }
             }
         });
-
 
         // ID 필드와 라벨 추가
         addLabelAndField("ID:", idField = new JTextField(15), gbc, 1);
@@ -99,7 +110,35 @@ public class VLoginDialog extends JDialog {
         gbc.gridwidth = 2;
         add(findIdButton, gbc);
 
-        setSize(500, 400);  // 로그인 창 크기 조정
+        // 관리자 모드 전환 버튼 추가
+        switchToAdminButton = new JButton("관리자 로그인으로 전환");
+        switchToAdminButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToAdminMode();
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        gbc.gridwidth = 2;
+        add(switchToAdminButton, gbc);
+
+        // 학생 모드 전환 버튼 추가
+        switchToStudentButton = new JButton("학생 로그인으로 전환");
+        switchToStudentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                switchToStudentMode();
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        add(switchToStudentButton, gbc);
+
+        updateMode(); // 초기 모드 설정
+
+        setSize(500, 400); // 로그인 창 크기 조정
         setLocationRelativeTo(parent);
 
         // 닫기 버튼 동작 설정
@@ -144,34 +183,66 @@ public class VLoginDialog extends JDialog {
         try {
             MUser user = daoUser.findUserByIdAndPassword(id, password);
             if (user != null) {
-                JOptionPane.showMessageDialog(this,
-                        "로그인 성공, 환영합니다.",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-                ((VMainFrame) parent).initialize(user);  // 로그인 성공 시 메인 프레임의 initialize 메서드 호출
+                if (isAdminMode && "admin".equals(user.getRole())) {
+                    JOptionPane.showMessageDialog(this, "관리자 로그인 성공", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                    if (parent instanceof VMainFrame) {
+                        System.out.println("Parent is a VMainFrame instance");
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                parent.dispose(); // 강제로 parent 프레임 종료
+                            }
+                        }); //dispose()명령어 충돌 --> 문제해결을 위해서 실행 예약을 하는 기능을 추가함.
+                    } else {
+                        System.out.println("Parent is not a VMainFrame instance");
+                    }
+                    // 강제로 parent 프레임 종료
+                    VManagerFrame managerFrame = new VManagerFrame();
+                    managerFrame.setVisible(true);
+                } else if (!isAdminMode && "student".equals(user.getRole())) {
+                    JOptionPane.showMessageDialog(this, "학생 로그인 성공", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();
+                    ((VMainFrame) parent).initialize(user);
+                } else {
+                    JOptionPane.showMessageDialog(this, "잘못된 ID 또는 비밀번호입니다.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 count++;
-                JOptionPane.showMessageDialog(this,
-                        "잘못된 ID 또는 비밀번호입니다.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                if(count >= 5) {
+                JOptionPane.showMessageDialog(this, "잘못된 ID 또는 비밀번호입니다.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (count >= 5) {
                     locked = true;
-                    JOptionPane.showMessageDialog(this,
-                            "5회이상 비밀번호를 틀리셨습니다. '나는 사람입니다.'를 입력하여 다시 로그인을 시도하십시오.",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "5회이상 비밀번호를 틀리셨습니다. '나는 사람입니다.'를 입력하여 다시 로그인을 시도하십시오.", "Error", JOptionPane.ERROR_MESSAGE);
                     handleLogin();
                 }
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this,
-                    "Error loading user information",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error loading user information", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-}
+    private void switchToAdminMode() {
+        isAdminMode = true;
+        updateMode();
+    }
 
+    private void switchToStudentMode() {
+        isAdminMode = false;
+        updateMode();
+    }
+
+    private void updateMode() {
+        if (isAdminMode) {
+            setTitle("관리자 로그인");
+            switchToAdminButton.setVisible(false);
+            switchToStudentButton.setVisible(true);
+            signUpButton.setVisible(false);
+            findIdButton.setVisible(false);
+        } else {
+            setTitle("학생 로그인");
+            switchToAdminButton.setVisible(true);
+            switchToStudentButton.setVisible(false);
+            signUpButton.setVisible(true);
+            findIdButton.setVisible(true);
+        }
+    }
+}

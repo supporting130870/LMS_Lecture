@@ -1,4 +1,4 @@
-package view;
+package view.userInterface;
 
 import javax.swing.*;
 import java.awt.*;
