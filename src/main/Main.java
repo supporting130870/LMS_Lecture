@@ -2,6 +2,9 @@ package main;
 
 import view.loginInterface.VLoginDialog;
 import view.userInterface.VMainFrame;
+import javax.swing.UIManager;
+
+import static javax.swing.JDialog.setDefaultLookAndFeelDecorated;
 
 public class Main {
 	// attributes
@@ -21,12 +24,17 @@ public class Main {
 		// associations
 	}
 	public static void main(String[] args) {
-        VMainFrame vMainFrame = new VMainFrame();
+		
+
+		VMainFrame vMainFrame = new VMainFrame();
         VLoginDialog vLoginDialog = new VLoginDialog(vMainFrame);
         vLoginDialog.setVisible(true);
         vMainFrame.setVisible(true);
         vMainFrame.initialize();
-	}
+		}
+
+
+
 
 	// methods
 	private void run() {

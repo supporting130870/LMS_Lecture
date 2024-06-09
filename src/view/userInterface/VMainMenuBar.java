@@ -41,7 +41,7 @@ public class VMainMenuBar extends JMenuBar {
                         JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        JMenuItem InformSincheong = new JMenuItem("수강신청 도움말");
+        JMenuItem InformSincheong = new JMenuItem("명지대학교 수강 학점 안내페이지");
         InformSincheong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +53,19 @@ public class VMainMenuBar extends JMenuBar {
                 }
             }
         });
+        JMenuItem guideBook = new JMenuItem("ICT단과대 수강신청 가이드");
+        guideBook.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Show the popup with program description
+                try {
+                    Desktop.getDesktop().browse(new URI("https://ugc.production.linktr.ee/79d792d8-9745-4d0e-ae74-e537efee84f9_ICT----------.pdf"));
+                } catch (IOException | URISyntaxException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
 
         JMenu Menu = new JMenu("메뉴");
         JMenuItem myPage = new JMenuItem("내 정보");
@@ -73,13 +86,13 @@ public class VMainMenuBar extends JMenuBar {
             }
         });
 
-
         Menu.add(myPage);
         Menu.add(logOut);
         this.add(Menu);
 
         helpMenu.add(programDescriptionItem);
         helpMenu.add(InformSincheong);
+        helpMenu.add(guideBook);
         this.add(helpMenu);
 
 

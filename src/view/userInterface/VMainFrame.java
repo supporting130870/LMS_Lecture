@@ -5,7 +5,7 @@ import model.DAOUser;
 import model.MUser;
 import view.loginInterface.VLoginDialog;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.Serial;
@@ -26,7 +26,8 @@ public class VMainFrame extends JFrame {
 	private VMyPage vMyPage;
 
 	public VMainFrame() {
-
+		//setUndecorated(true);
+		//setBackground(new Color(0,0,0,122));
 
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Image img = kit.getImage("data/Myongji-ui_BIG/5-1.gif");
