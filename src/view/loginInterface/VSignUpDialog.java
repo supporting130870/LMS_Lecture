@@ -211,23 +211,56 @@ public class VSignUpDialog extends JDialog {
     }
 
     private void handleSignUp() {
+        this.updates();
         if (!isIdChecked) {
             JOptionPane.showMessageDialog(this, "ID중복검사를 먼저 진행해주세요", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
 
-        this.updates();
+
         if(password.length() <8)
         {
             JOptionPane.showMessageDialog(this,
-                    "8자리 이상의 비밀번호를 설정하세요.",
+                    "비밀번호 길이를 확인해 주세요.",
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (!password.equals(confirmPassword)) {
+
+        if (!password.equals(confirmPassword))
+        {
             JOptionPane.showMessageDialog(this, "비밀번호가 일치하지 않습니다.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (this.birthDate.length() != 8 )
+        {
+            JOptionPane.showMessageDialog(this,
+                    "생년월일의 길이가 올바르지 않습니다.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if(!birthDate.matches("\\d+"))
+        {
+            JOptionPane.showMessageDialog(this,
+                    "생년월일의 값이 올바르지 않습니다.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (this.studentId.length() != 8 )
+        {
+            JOptionPane.showMessageDialog(this,
+                    "학생번호의 길이가 올바르지 않습니다.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if(!studentId.matches("\\d+"))
+        {
+            JOptionPane.showMessageDialog(this,
+                    "학생번호의 값이 올바르지 않습니다.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -243,39 +276,25 @@ public class VSignUpDialog extends JDialog {
 
         MUser user = new MUser(name, id, password, campus, birthDate, studentId, college, department, role);
 
-        if (!name.isEmpty()
-                && !id.isEmpty()
-                && !password.isEmpty()
-                && !confirmPassword.isEmpty()
-                && !campus.isEmpty()
-                && !college.isEmpty()
-                && !department.isEmpty()
-                && !birthDate.isEmpty()
-                && !studentId.isEmpty()
-                && !role.isEmpty()
-        ) {
 
-            try
-            {
-                daoUser.saveUser(user);
-                JOptionPane.showMessageDialog(this,
-                        "회원가입에 성공했습니다.",
-                        "회원가입성공",
-                        JOptionPane.INFORMATION_MESSAGE);
-                dispose();
-            }
-            catch(IOException e)
-            {
-                JOptionPane.showMessageDialog(this,
-                        "Error saving user information",
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        else {
+
+        try
+        {
+            daoUser.saveUser(user);
             JOptionPane.showMessageDialog(this,
-                    "공백란이 있거나 올바른 값을 입력했는지 확인하세요.",
+                    "회원가입에 성공했습니다.",
+                    "회원가입성공",
+                    JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+        }
+        catch(IOException e)
+        {
+            JOptionPane.showMessageDialog(this,
+                    "Error saving user information",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+
     }
     public void updates()
     {

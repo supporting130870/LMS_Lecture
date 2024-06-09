@@ -2,3 +2,6 @@
 강동훈,test,test,Seoul,20050000,60240000,경영대학,경영학과,student
 관리자,admin,root,seoul,20050000,60240000,dd,dd,admin
 박규빈,testuser,testuser,Seoul,20050822,602403333,사회과학대학,디지털미디어학과,student
+신승규,testusertestuser,testusertestuser,Seoul,20050321,60241111,경영대학,경영학과,student
+김홍민,testtest,testtest,Yongin,05052222,60231111,예술체육대학,디자인학부,student
+김철수,testtesttest,testtesttest,Seoul,11111111,12340000,인문대학,국어국문학과,student
