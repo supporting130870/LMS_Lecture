@@ -8,10 +8,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class JMainMenuBar extends JMenuBar {
+public class VMainMenuBar extends JMenuBar {
+    private VMainFrame vMainFrame;
+    public VMainMenuBar(VMainFrame vMainFrame) {
 
-    public JMainMenuBar() {
-        // Create the Help menu
+        this.vMainFrame = vMainFrame;
         JMenu helpMenu = new JMenu("도움말");
 
         // Create the Program Description menu item
@@ -23,7 +24,7 @@ public class JMainMenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Show the popup with program description
-                JOptionPane.showMessageDialog(JMainMenuBar.this,
+                JOptionPane.showMessageDialog(VMainMenuBar.this,
                         "2024년 1학기 절차적 사고와 프로그래밍 과목 기말평가 프로젝트로 제작된 프로그램입니다.\n프로그램의 코드는 최성운 교수님이 수업시간에 강의하신 내용을 기반으로 확장되었습니다 .",
                         "프로그램 정보",
                         JOptionPane.INFORMATION_MESSAGE);
@@ -41,10 +42,34 @@ public class JMainMenuBar extends JMenuBar {
                 }
             }
         });
-        // Add the menu item to the Help menu
+
+        JMenu Menu = new JMenu("메뉴");
+        JMenuItem myPage = new JMenuItem("내 정보");
+        JMenuItem logOut = new JMenuItem("로그아웃");
+
+        logOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                vMainFrame.logOut();
+            }
+        });
+
+        myPage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+
+        Menu.add(myPage);
+        Menu.add(logOut);
+        this.add(Menu);
+
         helpMenu.add(programDescriptionItem);
         helpMenu.add(InformSincheong);
-        // Add the Help menu to the menu bar
         this.add(helpMenu);
+
+
     }
 }

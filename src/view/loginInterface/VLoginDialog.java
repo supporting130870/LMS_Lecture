@@ -203,6 +203,7 @@ public class VLoginDialog extends JDialog {
                     JOptionPane.showMessageDialog(this, "학생 로그인 성공", "Success", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                     ((VMainFrame) parent).initialize(user);
+                    ((VMainFrame) parent).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "잘못된 ID 또는 비밀번호입니다.", "Error", JOptionPane.ERROR_MESSAGE);
                 }

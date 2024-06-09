@@ -3,6 +3,7 @@ package view.userInterface;
 import constants.Constant;
 import model.DAOUser;
 import model.MUser;
+import view.loginInterface.VLoginDialog;
 
 import javax.swing.JFrame;
 import java.awt.*;
@@ -16,7 +17,7 @@ public class VMainFrame extends JFrame {
 
 	// components
 	private VSugangSincheong vSugangSincheong;
-	private JMainMenuBar menuBar;
+	private VMainMenuBar menuBar;
 	private VClock vClock;
 	private MUser loggedInUser;
 	private VControlPanel vControlPanel;
@@ -35,7 +36,7 @@ public class VMainFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// components
-		this.menuBar = new JMainMenuBar();
+		this.menuBar = new VMainMenuBar(this);
 		this.setJMenuBar(menuBar);
 
         setLayout(new BorderLayout());
@@ -75,8 +76,11 @@ public class VMainFrame extends JFrame {
 	}
 
 
+	public void logOut() {
+		super.dispose();
+		VLoginDialog vLoginDialog = new VLoginDialog(this);
+		vLoginDialog.setVisible(true);
 
-
-
+	}
 }
 
