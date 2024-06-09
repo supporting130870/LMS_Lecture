@@ -14,16 +14,17 @@ import java.net.URI;
 public class VLoginDialog extends JDialog {
     private JTextField idField;
     private JPasswordField passwordField;
+    private JButton showPasswordButton;
     private JButton loginButton;
     private JButton signUpButton;
     private JButton findIdButton;
-    private JButton switchToAdminButton; // 추가
-    private JButton switchToStudentButton; // 추가
+    private JButton switchToAdminButton;
+    private JButton switchToStudentButton;
     private DAOUser daoUser;
     private JFrame parent;
     private int count;
     private boolean locked;
-    private boolean isAdminMode; // 현재 로그인 모드를 나타냄
+    private boolean isAdminMode;
 
     public VLoginDialog(JFrame parent) {
         super(parent, "로그인", true);
@@ -31,12 +32,11 @@ public class VLoginDialog extends JDialog {
         count = 0;
         locked = false;
         daoUser = new DAOUser();
-        isAdminMode = false; // 초기 모드는 학생 로그인
+        isAdminMode = false;
         initializeLayout();
     }
 
     private void initializeLayout() {
-
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -68,7 +68,7 @@ public class VLoginDialog extends JDialog {
         addLabelAndField("ID:", idField = new JTextField(15), gbc, 1);
 
         // 패스워드 필드와 라벨 추가
-        addLabelAndField("비밀번호:", passwordField = new JPasswordField(15), gbc, 2);
+        addPasswordFieldAndLabel("비밀번호:", passwordField = new JPasswordField(15), gbc, 2);
 
         // 로그인 버튼 추가
         loginButton = new JButton("로그인");
@@ -164,6 +164,36 @@ public class VLoginDialog extends JDialog {
         add(field, gbc);
     }
 
+    private void addPasswordFieldAndLabel(String labelText, JPasswordField passwordField, GridBagConstraints gbc, int yPos) {
+        JLabel label = new JLabel(labelText);
+        gbc.gridx = 0;
+        gbc.gridy = yPos;
+        gbc.gridwidth = 1;
+        add(label, gbc);
+
+        JPanel passwordPanel = new JPanel(new BorderLayout());
+        passwordPanel.add(passwordField, BorderLayout.CENTER);
+
+        showPasswordButton = new JButton("👁");
+        showPasswordButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                passwordField.setEchoChar((char) 0);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                passwordField.setEchoChar('*');
+            }
+        });
+        passwordPanel.add(showPasswordButton, BorderLayout.EAST);
+
+        gbc.gridx = 1;
+        gbc.gridy = yPos;
+        gbc.gridwidth = 1;
+        add(passwordPanel, gbc);
+    }
+
     private void handleLogin() {
         if (locked) {
             String input = JOptionPane.showInputDialog(this, "'나는 사람입니다.'를 입력하세요.");
@@ -192,13 +222,12 @@ public class VLoginDialog extends JDialog {
                             public void run() {
                                 parent.dispose(); // 강제로 parent 프레임 종료
                             }
-                        }); //dispose()명령어 충돌 --> 문제해결을 위해서 실행 예약을 하는 기능을 추가함.
+                        });
                     } else {
                         System.out.println("Parent is not a VMainFrame instance");
                     }
-                    // 강제로 parent 프레임 종료
-                    VManagerFrame managerFrame = new VManagerFrame();
-                    managerFrame.setVisible(true);
+                    VManagerFrame vmanagerFrame = new VManagerFrame();
+                    vmanagerFrame.setVisible(true);
                 } else if (!isAdminMode && "student".equals(user.getRole())) {
                     JOptionPane.showMessageDialog(this, "학생 로그인 성공", "Success", JOptionPane.INFORMATION_MESSAGE);
                     dispose();

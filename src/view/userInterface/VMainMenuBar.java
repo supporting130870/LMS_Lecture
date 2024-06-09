@@ -1,5 +1,9 @@
 package view.userInterface;
 
+import model.DAOIndex;
+import model.DAOUser;
+import model.MUser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,9 +14,16 @@ import java.net.URISyntaxException;
 
 public class VMainMenuBar extends JMenuBar {
     private VMainFrame vMainFrame;
-    public VMainMenuBar(VMainFrame vMainFrame) {
+    private MUser mUser;
+    private DAOUser daoUser;
+    private DAOIndex daoIndex;
+    public VMainMenuBar(VMainFrame vMainFrame, MUser mUser, DAOUser daoUser) {
 
         this.vMainFrame = vMainFrame;
+        this.mUser = mUser;
+        this.daoUser = daoUser;
+        this.daoIndex = new DAOIndex();
+
         JMenu helpMenu = new JMenu("도움말");
 
         // Create the Program Description menu item
@@ -57,7 +68,8 @@ public class VMainMenuBar extends JMenuBar {
         myPage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                VMyPage myPageDialog = new VMyPage(vMainFrame, mUser, daoUser,daoIndex);
+                myPageDialog.setVisible(true);
             }
         });
 

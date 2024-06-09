@@ -23,8 +23,11 @@ public class VMainFrame extends JFrame {
 	private VControlPanel vControlPanel;
 	private DAOUser daoUser;
 	private VSumCredit vSumCredit;
+	private VMyPage vMyPage;
 
 	public VMainFrame() {
+
+
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Image img = kit.getImage("data/Myongji-ui_BIG/5-1.gif");
 		this.setIconImage(img);
@@ -36,8 +39,7 @@ public class VMainFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// components
-		this.menuBar = new VMainMenuBar(this);
-		this.setJMenuBar(menuBar);
+
 
         setLayout(new BorderLayout());
 		this.daoUser = new DAOUser();
@@ -47,6 +49,7 @@ public class VMainFrame extends JFrame {
 
         this.vClock = new VClock();
         this.add(vClock, BorderLayout.SOUTH);
+
 
 	}
 	public void initialize()
@@ -68,7 +71,8 @@ public class VMainFrame extends JFrame {
 			VSumCredit.MaxCredit(17);
 		}
 		this.daoUser.loadDataTable(user.getId(), this.vSugangSincheong.getVMiridamgi(), this.vSugangSincheong.getVSincheong());
-
+		this.menuBar = new VMainMenuBar(this, loggedInUser,daoUser);
+		this.setJMenuBar(menuBar);
 	}
 	public void dispose() {
 		System.out.println("VMainFrame dispose() called");

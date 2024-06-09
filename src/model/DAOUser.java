@@ -6,9 +6,7 @@ import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Vector;
 
 import static java.lang.Integer.parseInt;
@@ -29,15 +27,9 @@ public class DAOUser {
     }
 
     public void saveUser(MUser user) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
-            writer.write(user.getName() + "," + user.getId() + "," + user.getPassword() + "," +
-                    user.getCampus() + "," + user.getBirthDate() + "," + user.getStudentId() + "," +
-                    user.getCollege() + "," + user.getDepartment() + "," + user.getRole());
-            writer.newLine();
-        } catch (IOException e) {
-            System.err.println("Error saving user: " + e.getMessage());
-            throw e;
-        }
+        Vector<MUser> users = loadUsers();
+        users.add(user);
+        saveAllUsers(users);
     }
 
     public Vector<MUser> loadUsers() throws IOException {
@@ -147,5 +139,50 @@ public class DAOUser {
             System.err.println("File not found: " + filePath);
         }
         return lectureList;
+    }
+
+    // 비밀번호 변경 메서드
+    public void changePassword(MUser user, String oldPassword, String newPassword) throws IOException {
+        Vector<MUser> users = loadUsers();
+        for (MUser u : users) {
+            if (u.getId().equals(user.getId()) && u.getPassword().equals(oldPassword)) {
+                u.setPassword(newPassword);
+                saveAllUsers(users);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+    }
+
+    // 개인 정보 수정 메서드
+    public MUser updateInfo(MUser user, String name, String campus, String birthDate, String studentId, String college, String department) throws IOException {
+        Vector<MUser> users = loadUsers();
+        for (MUser u : users) {
+            if (u.getId().equals(user.getId())) {
+                u.setName(name);
+                u.setCampus(campus);
+                u.setBirthDate(birthDate);
+                u.setStudentId(studentId);
+                u.setCollege(college);
+                u.setDepartment(department);
+                saveAllUsers(users);
+                return u;
+            }
+        }
+        return null;
+    }
+
+    public void saveAllUsers(Vector<MUser> users) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (MUser user : users) {
+                writer.write(user.getName() + "," + user.getId() + "," + user.getPassword() + "," +
+                        user.getCampus() + "," + user.getBirthDate() + "," + user.getStudentId() + "," +
+                        user.getCollege() + "," + user.getDepartment() + "," + user.getRole());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving all users: " + e.getMessage());
+            throw e;
+        }
     }
 }

@@ -1,5 +1,7 @@
 package view.managerInterface;
 
+import view.userInterface.VMainMenuBar;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -7,6 +9,7 @@ import java.io.IOException;
 public class VManagerFrame extends JFrame {
     private JScrollPane jScrollPane;
     private VUserList vUserList;
+    private VMainMenuBar vMainMenuBar;
 
     public VManagerFrame() throws IOException {
         // 프레임 설정
@@ -18,7 +21,8 @@ public class VManagerFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
-        this.vUserList = new VUserList();
+        this.vUserList = new VUserList(this);
+
         //항목추가
         this.add(this.vUserList, BorderLayout.CENTER);
         //활성화
